@@ -2,7 +2,7 @@
 This code uses Binance API to create Buy and Sell orders based on EMA_10 and EMA_50 Indicators. Every line has comments above to explain it's use
 Project Start Date: May 4th 2021
 Project First Release: May 17th 2021
-Project Updated: May 29th 2021
+Project Updated: May 31th 2021
 '''
 #imports websocket library to connect to Binance websocket for Price data
 import websocket
@@ -10,13 +10,10 @@ import websocket
 import json
 #imports pprint library for printing API data
 import pprint
-#imports config.py where API Key and Secret are stored
-import config
 #imports time library to create delays
 import time
 #imports binance API's
 from binance.client import Client
-from binance.enums import *
 #imports datetime to make sure bot does not lag
 from datetime import datetime
 #imports exeptions incase bot fails to complete order
@@ -26,18 +23,25 @@ from binance.exceptions import BinanceOrderException
 #creates list named "closes" where last close was stored (needed to calculate EMA) 
 closes = []
 
-#previous EMA should bereplaced here everytime before starting bot
+#asks user for previous EMA before starting bot
+Previous_EMA_10_Input = int(float((input("Enter the Latest EMA10: "))))
+Previous_EMA_50_Input = int(float((input("Enter the Latest EMA50: "))))
 Previous_EMA_10 = []
 Previous_EMA_50 = []
+Previous_EMA_10.append(Previous_EMA_10_Input)
+Previous_EMA_50.append(Previous_EMA_50_Input)
 
 #Connects to the asset bought and sold
 TRADE_SYMBOL = 'ETHUSDT'
+TRADE_ASSET = 'ETH'
 
 #socket stream. can be updated for different coins, trade types, and charts 
 SOCKET = "wss://stream.binance.com:9443/ws/ethusdt@kline_5m"
 
-#connects to binance account api for buying, selling and checkingaccount related info
-client = Client(config.API_KEY, config.API_SECRET)
+#Enter your Binance API Key and Secret between the double quatations
+API_KEY = ""
+API_SECRET = ""
+client = Client(API_KEY, API_SECRET)
 
 #prints "opened connection" upon connection to websocket
 def on_open(ws):
@@ -70,18 +74,19 @@ def on_message(ws, message):
     print("your USDT balance is currently:", USDTbalance)
 
     #gets user's ETH balance, convers it to float and prints it every 2 seconds
-    ETHbal = (client.get_asset_balance(asset='ETH'))
-    ETHbalance = float(ETHbal['free'])
-    print("your ETH balance is currently: ", ETHbalance)
+    TRADE_ASSET_bal = (client.get_asset_balance(asset=TRADE_ASSET))
+    TRADE_ASSET_Balanace = float(TRADE_ASSET_bal['free'])
+    print("your ETH balance is currently: ", TRADE_ASSET_Balanace)
 
     #gets current price of ETH and prints it out every 2 seconds
-    avg_price = (client.get_avg_price(symbol='ETHUSDT'))
+    avg_price = (client.get_avg_price(symbol=TRADE_SYMBOL))
     symbol_price = float(avg_price['price'])
     print("The current price of 1 ETH is: ", symbol_price)
+    print("-----------------------")
     
     #creates a quantity for the bot to buy and sell using balance
     BUY_QUANTIY = round(((USDTbalance - 0.02) / symbol_price), 5)
-    SELL_QUANTITY = round((ETHbalance), 5)
+    SELL_QUANTITY = round((TRADE_ASSET_Balanace), 5)
     
     candle = json_message["k"]
 
@@ -117,20 +122,19 @@ def on_message(ws, message):
                     type='MARKET', 
                     quantity=BUY_QUANTIY)
                 print (buy_order)
-                
             except BinanceAPIException as e:
                 # error handling goes here
                 print(e)
             except BinanceOrderException as e:
                 # error handling goes here
-                print(e)
+                print(e)             
                 
         #when in a downtrend (EMA 10 smaller than EMA 50) the bot will sell max
         if EMA_10 < EMA_50:
             print("Sell!")
             try:
                 #API function to sell
-                print("sending order")
+                print("Sending order")
                 buy_order = client.create_order(
                     symbol=TRADE_SYMBOL, 
                     side='SELL', 
