@@ -40,8 +40,8 @@ TRADE_ASSET = 'ETH'
 SOCKET = "wss://stream.binance.com:9443/ws/ethusdt@kline_1m"
 
 #connects to binance account api for buying, selling and checkingaccount related info
-API_KEY = "xxxxxxxxxxxxxx"
-API_SECRET = "xxxxxxx"
+API_KEY = "xxxxxxxxxxxxxxxxxx"
+API_SECRET = "xxxxxxxxxxxxxxxxxx"
 client = Client(API_KEY, API_SECRET)
 info = client.get_symbol_info(TRADE_SYMBOL)
 precision = info['baseAssetPrecision']
@@ -87,6 +87,9 @@ while __name__ == "__main__":
         #loads received information into a json message
         json_message = json.loads(message)
         
+        avg_price = (client.get_avg_price(symbol=TRADE_SYMBOL))
+        symbol_price = float(avg_price['price'])
+        
         #gets user's USDT balance
         USDTbal = (client.get_asset_balance(asset='USDT'))
         USDTbalance= float(USDTbal['free'])
@@ -95,11 +98,9 @@ while __name__ == "__main__":
         #gets user's Trading asset balance
         TRADE_ASSET_bal = (client.get_asset_balance(asset=TRADE_ASSET))
         TRADE_ASSET_Balanace = float(TRADE_ASSET_bal['free'])
-        print("your ETH balance is currently: ", TRADE_ASSET_Balanace)
+        print("your ETH balance is currently: " + str(TRADE_ASSET_Balanace) + " (=" + str(TRADE_ASSET_Balanace*symbol_price) + "USDT)")
 
-        #gets current price of Trading asset and prints it out every 2 seconds
-        avg_price = (client.get_avg_price(symbol=TRADE_SYMBOL))
-        symbol_price = float(avg_price['price'])
+        #gets current price of Trading asset
         print("The current price of 1 ETH is: ", symbol_price)
         print("-----------------------")
     
