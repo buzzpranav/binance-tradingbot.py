@@ -40,8 +40,8 @@ TRADE_ASSET = 'ETH'
 SOCKET = "wss://stream.binance.com:9443/ws/ethusdt@kline_1m"
 
 #connects to binance account api for buying, selling and checkingaccount related info
-API_KEY = "Z6JjWqlBVYsSIMCkAhqvMT8fcNOirVxRwUSgdz2GzEbEW19MR8fCP3HkAm7SPPRC"
-API_SECRET = "8gx7Hztj72SxIvxhTZnEY8aQw87LMuUIvi3rwMrzYKTwmcQyM1Ik51ckT5zckkT3"
+API_KEY = "xxxxxxxxxxxxxx"
+API_SECRET = "xxxxxxx"
 client = Client(API_KEY, API_SECRET)
 info = client.get_symbol_info(TRADE_SYMBOL)
 precision = info['baseAssetPrecision']
