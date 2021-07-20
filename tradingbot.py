@@ -141,7 +141,7 @@ while __name__ == "__main__":
                 try:
                     #API function to create a buy order
                     print("sending order")
-                    buy_order = client.create_test_order(
+                    buy_order = client.create_order(
                         symbol=TRADE_SYMBOL, 
                         side='BUY', 
                         type='MARKET', 
@@ -161,7 +161,7 @@ while __name__ == "__main__":
                 try:
                     #API function to sell
                     print("Sending order")
-                    buy_order = client.create_test_order(
+                    buy_order = client.create_order(
                         symbol=TRADE_SYMBOL, 
                         side='SELL', 
                         type='MARKET', 
