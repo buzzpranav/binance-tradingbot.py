@@ -1,0 +1,79 @@
+{
+  "manifest_version": 2,
+  "name": "Pranav S Narayanan",
+  "short_name": "Pranav",
+  "description": "Portfolio Website of Pranav S Narayanan, An AI Developer, 3D Artist, and Crypto Investor.",
+  
+  "author": "Pranav S Narayanan",
+  "version": "0.0.1",
+  "version_name": "alpha1",
+  "default_locale": "en",
+  
+
+  "background": {
+    "persistent": false
+  },
+  "background_page": "/images/bg.jpeg",
+  "background_color": "#0c0c0c",
+  "theme_color":"#0c0c0c",
+  "chrome_ui_overrides": {
+    "bookmarks_ui": {
+      "remove_bookmark_shortcut": true,
+      "remove_button": true
+    }
+  },
+  "display":"standalone",
+    
+  "minimum_chrome_version": "20",
+  "icons": [
+      {
+          "src": "/android-chrome-36x36.png",
+          "sizes": "36x36",
+          "type": "image/png"
+      },
+      {
+          "src": "/android-chrome-48x48.png",
+          "sizes": "48x48",
+          "type": "image/png"
+      },
+      {
+          "src": "/android-chrome-72x72.png",
+          "sizes": "72x72",
+          "type": "image/png"
+      },
+      {
+          "src": "/android-chrome-96x96.png",
+          "sizes": "96x96",
+          "type": "image/png"
+      },
+      {
+          "src": "/android-chrome-144x144.png",
+          "sizes": "144x144",
+          "type": "image/png"
+      },
+      {
+          "src": "/android-chrome-192x192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+      },
+      {
+          "src": "/android-chrome-256x256.png",
+          "sizes": "256x256",
+          "type": "image/png"
+      },
+      {
+          "src": "/android-chrome-384x384.png",
+          "sizes": "384x384",
+          "type": "image/png"
+      },
+      {
+          "src": "/android-chrome-512x512.png",
+          "sizes": "512x512",
+          "type": "image/png"
+      }
+  ],
+
+  "homepage_url": "http://prashantsani.com",
+  "start_url":"/"  
+  
+}
